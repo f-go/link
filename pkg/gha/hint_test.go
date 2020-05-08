@@ -3,6 +3,7 @@ package gha
 import (
 	"encoding/xml"
 	"fmt"
+	"io/ioutil"
 	"reflect"
 	"testing"
 	"time"
@@ -10,23 +11,24 @@ import (
 )
 
 func TestStructureOfHintRequest(t *testing.T) {
-	example := `<?xml version="1.0" encoding="UTF-8"?>
-<HintRequest id="request" timestamp="2019-06-03T22:59:48Z">
-  <LastFetchTime>2019-06-03T22:54:40Z</LastFetchTime>
-</HintRequest>`
+	request, err := ioutil.ReadFile("./testdata/HintRequest.xml")
+	if err != nil {
+		t.Errorf("File reading error %v", err)
+		return
+	}
 
 	t.Run("Test HintRequest Struct", func(t *testing.T) {
 		timestamp, _ := time.Parse(time.RFC3339, "2019-06-03T22:59:48Z")
 		lastFetchTime, _ := time.Parse(time.RFC3339, "2019-06-03T22:54:40Z")
 		want := HintRequest{
-			XMLName:      xml.Name{"", "HintRequest"},
+			XMLName:       xml.Name{"", "HintRequest"},
 			ID:            "request",
 			Timestamp:     timestamp,
 			LastFetchTime: lastFetchTime,
 		}
 
 		got := HintRequest{}
-		xml.Unmarshal([]byte(example), &got)
+		xml.Unmarshal(request, &got)
 
 		if !reflect.DeepEqual(got.XMLName, want.XMLName) {
 			t.Errorf("XMLName = %v, want %v", got.XMLName, want.XMLName)
@@ -51,14 +53,13 @@ func printError(t *testing.T, name string, got, want interface{}) {
 
 func TestStructureOfHint(t *testing.T) {
 	tests := []struct {
-		name    string
-		request string
-		want    Hint
+		name string
+		file string
+		want Hint
 	}{
 		{
 			"Test Hint Struct - No Items",
-			`<?xml version="1.0" encoding="UTF-8"?>
-<Hint></Hint>`,
+			"./testdata/Hint-NoItems.xml",
 			Hint{
 				xml.Name{"", "Hint"},
 				[]Item{},
@@ -68,24 +69,7 @@ func TestStructureOfHint(t *testing.T) {
 		// -------------------------------------------------------------------------------------------------------------
 		{
 			"Test Hint Struct - Exact Itinerary Hint Response",
-			`<!-- Exact Itinerary Hint Response -->
-<?xml version="1.0" encoding="UTF-8"?>
-<Hint>
- <Item>
-   <Property>12345</Property>
-   <Stay>
-     <CheckInDate>2018-07-03</CheckInDate>
-     <LengthOfStay>3</LengthOfStay>
-   </Stay>
- </Item>
- <Item>
-   <Property>12345</Property>
-   <Stay>
-     <CheckInDate>2018-07-03</CheckInDate>
-     <LengthOfStay>4</LengthOfStay>
-   </Stay>
- </Item>
-</Hint>`,
+			"./testdata/Hint-ExactItinerary.xml",
 			Hint{
 				xml.Name{"", "Hint"},
 				[]Item{
@@ -114,16 +98,7 @@ func TestStructureOfHint(t *testing.T) {
 		// -------------------------------------------------------------------------------------------------------------
 		{
 			"Test Hint Struct - Check-in Ranges Hint Response",
-			`<!-- Check-in Ranges Hint Response -->
-<?xml version="1.0" encoding="UTF-8"?>
-<Hint>
- <Item>
-   <Property>12345</Property>
-   <Property>67890</Property>
-   <FirstDate>2018-07-03</FirstDate>
-   <LastDate>2018-07-06</LastDate>
- </Item>
-</Hint>`,
+			"./testdata/Hint-CheckInRanges.xml",
 			Hint{
 				xml.Name{"", "Hint"},
 				[]Item{
@@ -143,26 +118,7 @@ func TestStructureOfHint(t *testing.T) {
 		// -------------------------------------------------------------------------------------------------------------
 		{
 			"Test Hint Struct - Ranged Stay Hint Response",
-			`<!-- Ranged Stay Hint Response -->
-<?xml version="1.0" encoding="UTF-8"?>
-<Hint>
- <!-- Google fetches prices for all itineraries (first and last date are set) -->
- <Item>
-   <Property>12345</Property>
-   <StaysIncludingRange>
-     <FirstDate>2018-07-03</FirstDate>
-     <LastDate>2018-07-06</LastDate>
-   </StaysIncludingRange>
- </Item>
-
- <!-- Google fetches prices for a single night (first date only) -->
- <Item>
-   <Property>67890</Property>
-   <StaysIncludingRange>
-     <FirstDate>2018-07-03</FirstDate>
-   </StaysIncludingRange>
- </Item>
-</Hint>`,
+			"./testdata/Hint-RangedStay.xml",
 			Hint{
 				xml.Name{"", "Hint"},
 				[]Item{
@@ -194,8 +150,14 @@ func TestStructureOfHint(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			request, err := ioutil.ReadFile(tt.file)
+			if err != nil {
+				t.Errorf("File reading error %v", err)
+				return
+			}
+
 			var got Hint
-			xml.Unmarshal([]byte(tt.request), &got)
+			xml.Unmarshal(request, &got)
 
 			if !reflect.DeepEqual(got.XMLName, tt.want.XMLName) {
 				printError(t, tt.name, got.XMLName, tt.want.XMLName)

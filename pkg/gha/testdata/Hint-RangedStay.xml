@@ -1,0 +1,20 @@
+<!-- Ranged Stay Hint Response -->
+<?xml version="1.0" encoding="UTF-8"?>
+<Hint>
+    <!-- Google fetches prices for all itineraries (first and last date are set) -->
+    <Item>
+        <Property>12345</Property>
+        <StaysIncludingRange>
+            <FirstDate>2018-07-03</FirstDate>
+            <LastDate>2018-07-06</LastDate>
+        </StaysIncludingRange>
+    </Item>
+
+    <!-- Google fetches prices for a single night (first date only) -->
+    <Item>
+        <Property>67890</Property>
+        <StaysIncludingRange>
+            <FirstDate>2018-07-03</FirstDate>
+        </StaysIncludingRange>
+    </Item>
+</Hint>

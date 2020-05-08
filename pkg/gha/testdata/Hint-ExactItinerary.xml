@@ -1,0 +1,18 @@
+<!-- Exact Itinerary Hint Response -->
+<?xml version="1.0" encoding="UTF-8"?>
+<Hint>
+    <Item>
+        <Property>12345</Property>
+        <Stay>
+            <CheckInDate>2018-07-03</CheckInDate>
+            <LengthOfStay>3</LengthOfStay>
+        </Stay>
+    </Item>
+    <Item>
+        <Property>12345</Property>
+        <Stay>
+            <CheckInDate>2018-07-03</CheckInDate>
+            <LengthOfStay>4</LengthOfStay>
+        </Stay>
+    </Item>
+</Hint>

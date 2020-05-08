@@ -1,0 +1,10 @@
+<!-- Check-in Ranges Hint Response -->
+<?xml version="1.0" encoding="UTF-8"?>
+<Hint>
+    <Item>
+        <Property>12345</Property>
+        <Property>67890</Property>
+        <FirstDate>2018-07-03</FirstDate>
+        <LastDate>2018-07-06</LastDate>
+    </Item>
+</Hint>
