@@ -28,7 +28,10 @@ func TestStructureOfHintRequest(t *testing.T) {
 		}
 
 		got := HintRequest{}
-		xml.Unmarshal(request, &got)
+		err := xml.Unmarshal(request, &got)
+		if err != nil {
+			t.Errorf("Parsing request data failed. %v", err)
+		}
 
 		if !reflect.DeepEqual(got.XMLName, want.XMLName) {
 			t.Errorf("XMLName = %v, want %v", got.XMLName, want.XMLName)
@@ -157,7 +160,11 @@ func TestStructureOfHint(t *testing.T) {
 			}
 
 			var got Hint
-			xml.Unmarshal(request, &got)
+			err = xml.Unmarshal(request, &got)
+			if err != nil {
+				t.Errorf("%s: Parsing request data failed with error: %v", tt.name, err)
+				return
+			}
 
 			if !reflect.DeepEqual(got.XMLName, tt.want.XMLName) {
 				printError(t, tt.name, got.XMLName, tt.want.XMLName)
