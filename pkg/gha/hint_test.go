@@ -10,7 +10,7 @@ import (
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
-func TestStructureOfHintRequest(t *testing.T) {
+func TestHintRequestStruct(t *testing.T) {
 	request, err := ioutil.ReadFile("./testdata/HintRequest.xml")
 	if err != nil {
 		t.Errorf("File reading error %v", err)
@@ -54,7 +54,7 @@ func printError(t *testing.T, name string, got, want interface{}) {
 	t.Errorf("%s - Item\ngot:  %v\nwant: %v\ndiff: %v", name, got, want, dmp.DiffPrettyText(diffs))
 }
 
-func TestStructureOfHint(t *testing.T) {
+func TestHintStruct(t *testing.T) {
 	tests := []struct {
 		name string
 		file string
