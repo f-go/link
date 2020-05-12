@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Query>
+    <Checkin>2018-06-10</Checkin>
+    <Nights>3</Nights>
+    <PropertyList>
+        <Property>pid5</Property>
+        <Property>pid8</Property>
+        <Property>pid13</Property>
+        <Property>pid21</Property>
+    </PropertyList>
+</Query>
