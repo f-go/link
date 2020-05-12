@@ -76,9 +76,6 @@ func TestMetadataQuery(t *testing.T) {
 		},
 	}
 
-	data, _ := xml.Marshal(want)
-	fmt.Println(string(data))
-
 	if !reflect.DeepEqual(got, want) {
 		dmp := diffmatchpatch.New()
 		diffs := dmp.DiffMain(fmt.Sprintf("%v", got), fmt.Sprintf("%v", want), false)

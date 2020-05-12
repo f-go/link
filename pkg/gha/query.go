@@ -35,6 +35,11 @@ type Query struct {
 	Nights              int                 `xml:"Nights,omitempty"`
 	PropertyList        PropertyList        `xml:"PropertyList,omitempty"`
 	HotelInfoProperties HotelInfoProperties `xml:"HotelInfoProperties,omitempty"`
+
+	// Left out Live Query support (<LatencySensitive> and <Context>) for now.
+	// This will be implemented later.
+	//
+	// https://developers.google.com/hotels/hotel-prices/xml-reference/queries#Context
 }
 
 // One or more IDs for hotel that require pricing updates.
