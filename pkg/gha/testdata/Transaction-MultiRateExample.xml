@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Transaction timestamp="2020-07-23T16:20:00-04:00" id="42">
+    <Result>
+        <Property>1234</Property>
+        <Checkin>2021-01-13</Checkin>
+        <Nights>9</Nights>
+        <Baserate currency="USD">3196.1</Baserate>
+        <Tax currency="USD">559.49</Tax>
+        <OtherFees currency="USD">543.34</OtherFees>
+        <Occupancy>2</Occupancy>
+        <Rates>
+            <Rate>
+                <Baserate currency="USD">3196.1</Baserate>
+                <Tax currency="USD">559.49</Tax>
+                <OtherFees currency="USD">543.34</OtherFees>
+                <Occupancy>1</Occupancy>
+            </Rate>
+            <Rate>
+                <Baserate currency="USD">3196.1</Baserate>
+                <Tax currency="USD">559.49</Tax>
+                <OtherFees currency="USD">543.34</OtherFees>
+                <Occupancy>3</Occupancy>
+            </Rate>
+            <Rate>
+                <Baserate currency="USD">3196.1</Baserate>
+                <Tax currency="USD">559.49</Tax>
+                <OtherFees currency="USD">543.34</OtherFees>
+                <Occupancy>4</Occupancy>
+            </Rate>
+            <Rate>
+                <Baserate currency="USD">3196.1</Baserate>
+                <Tax currency="USD">559.49</Tax>
+                <OtherFees currency="USD">543.34</OtherFees>
+                <Occupancy>5</Occupancy>
+            </Rate>
+            <Rate>
+                <Baserate currency="USD">3196.1</Baserate>
+                <Tax currency="USD">559.49</Tax>
+                <OtherFees currency="USD">543.34</OtherFees>
+                <Occupancy>6</Occupancy>
+            </Rate>
+        </Rates>
+    </Result>
+</Transaction>

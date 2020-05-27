@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Transaction timestamp="2017-07-23T16:20:00-04:00" id="42">
+    <Result>
+        <Property>060773</Property>
+        <RoomID>RoomType101</RoomID>
+        <Checkin>2018-06-10</Checkin>
+        <Nights>2</Nights>
+        <Baserate currency="USD">278.33</Baserate>
+        <Tax currency="USD">25.12</Tax>
+        <OtherFees currency="USD">2.00</OtherFees>
+        <AllowablePointsOfSale>
+            <PointOfSale id="site1"/>
+        </AllowablePointsOfSale>
+    </Result>
+    <Result>
+        <Property>052213</Property>
+        <RoomID>RoomType101</RoomID>
+        <Checkin>2018-06-10</Checkin>
+        <Nights>2</Nights>
+        <Baserate currency="USD">299.98</Baserate>
+        <Tax currency="USD">26.42</Tax>
+        <OtherFees currency="USD">2.00</OtherFees>
+        <AllowablePointsOfSale>
+            <PointOfSale id="otto"/>
+            <PointOfSale id="simon"/>
+        </AllowablePointsOfSale>
+    </Result>
+</Transaction>

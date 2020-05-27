@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Transaction id="Wtdj8QoQIWcAAbaTGlIAAAC4" timestamp="2018-04-18T11:27:45-04:00">
+    <Result>
+        <Property>8251</Property>
+        <Checkin>2018-06-20</Checkin>
+        <Nights>1</Nights>
+        <Baserate currency="USD">62.18</Baserate>
+        <Tax currency="USD">2.45</Tax>
+        <OtherFees currency="USD">0.00</OtherFees>
+        <Rates>
+            <Rate rate_rule_id="rule-951">
+                <Occupancy>2</Occupancy>
+                <OccupancyDetails>
+                    <NumAdults>1</NumAdults>
+                    <Children>
+                        <Child age="17"/>
+                    </Children>
+                </OccupancyDetails>
+                <Baserate currency="USD">42.61</Baserate>
+                <Tax currency="USD">5.70</Tax>
+                <OtherFees currency="USD">0.00</OtherFees>
+                <Custom1>abc4</Custom1>
+                <AllowablePointsOfSale>
+                    <PointOfSale id="yourhotelpartnersite.com"/>
+                </AllowablePointsOfSale>
+            </Rate>
+        </Rates>
+    </Result>
+</Transaction>
