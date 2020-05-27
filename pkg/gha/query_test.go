@@ -28,7 +28,7 @@ func TestPricingQuery(t *testing.T) {
 		XMLName: xml.Name{Local: "Query"},
 		Checkin: "2018-06-10",
 		Nights:  3,
-		PropertyList: PropertyList{
+		PropertyList: &PropertyList{
 			XMLName: xml.Name{Local: "PropertyList"},
 			Property: []Property{
 				{xml.Name{Local: "Property"}, "pid5"},
@@ -38,9 +38,6 @@ func TestPricingQuery(t *testing.T) {
 			},
 		},
 	}
-
-	data, _ := xml.Marshal(want)
-	fmt.Println(string(data))
 
 	if !reflect.DeepEqual(got, want) {
 		dmp := diffmatchpatch.New()
@@ -57,7 +54,6 @@ func TestMetadataQuery(t *testing.T) {
 		t.Errorf("File reading error %v", err)
 		return
 	}
-
 	if err = xml.Unmarshal(request, &got); err != nil {
 		t.Errorf("Parsing request data failed with error: %v", err)
 		return
@@ -65,7 +61,7 @@ func TestMetadataQuery(t *testing.T) {
 
 	want = Query{
 		XMLName: xml.Name{Local: "Query"},
-		HotelInfoProperties: HotelInfoProperties{
+		HotelInfoProperties: &HotelInfoProperties{
 			XMLName: xml.Name{Local: "HotelInfoProperties"},
 			Property: []Property{
 				{xml.Name{Local: "Property"}, "pid5"},

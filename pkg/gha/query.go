@@ -30,11 +30,11 @@ import "encoding/xml"
 // The syntax for the messages is different, depending on the type. Both
 // types are described in this section.
 type Query struct {
-	XMLName             xml.Name            `xml:"Query"`
-	Checkin             string              `xml:"Checkin,omitempty"`
-	Nights              int                 `xml:"Nights,omitempty"`
-	PropertyList        PropertyList        `xml:"PropertyList,omitempty"`
-	HotelInfoProperties HotelInfoProperties `xml:"HotelInfoProperties,omitempty"`
+	XMLName             xml.Name             `xml:""`
+	Checkin             string               `xml:",omitempty"`
+	Nights              int                  `xml:",omitempty"`
+	PropertyList        *PropertyList        `xml:",omitempty"`
+	HotelInfoProperties *HotelInfoProperties `xml:",omitempty"`
 
 	// Left out Live Query support (<LatencySensitive> and <Context>) for now.
 	// This will be implemented later.
@@ -44,14 +44,14 @@ type Query struct {
 
 // One or more IDs for hotel that require pricing updates.
 type PropertyList struct {
-	XMLName  xml.Name   `xml:"PropertyList"`
-	Property []Property `xml:"Property,omitempty"`
+	XMLName  xml.Name   `xml:""`
+	Property []Property `xml:",omitempty"`
 }
 
 // One or more properties for which Google wants updated room and Room Bundle
 // metadata in a metadata Query message. This element can contain one or more
 // <Property> elements that specify hotel property IDs.
 type HotelInfoProperties struct {
-	XMLName  xml.Name   `xml:"HotelInfoProperties"`
-	Property []Property `xml:"Property,omitempty"`
+	XMLName  xml.Name   `xml:""`
+	Property []Property `xml:",omitempty"`
 }
