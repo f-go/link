@@ -1,8 +1,6 @@
 package gha
 
 import (
-	"encoding/xml"
-
 	cdt "github.com/f-go/go-custom-datetime"
 )
 
@@ -34,8 +32,7 @@ import (
 // The syntax for the messages is different, depending on the type. Both
 // types are described in this section.
 type Query struct {
-	XMLName             xml.Name             `xml:""`
-	Checkin             cdt.CustomDate      `xml:",omitempty"`
+	Checkin             cdt.CustomDate       `xml:",omitempty"`
 	Nights              int                  `xml:",omitempty"`
 	PropertyList        *PropertyList        `xml:",omitempty"`
 	HotelInfoProperties *HotelInfoProperties `xml:",omitempty"`
@@ -48,7 +45,6 @@ type Query struct {
 
 // One or more IDs for hotel that require pricing updates.
 type PropertyList struct {
-	XMLName  xml.Name   `xml:""`
 	Property []Property `xml:",omitempty"`
 }
 
@@ -56,6 +52,5 @@ type PropertyList struct {
 // metadata in a metadata Query message. This element can contain one or more
 // <Property> elements that specify hotel property IDs.
 type HotelInfoProperties struct {
-	XMLName  xml.Name   `xml:""`
 	Property []Property `xml:",omitempty"`
 }

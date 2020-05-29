@@ -27,16 +27,14 @@ func TestPricingQuery(t *testing.T) {
 
 	checkin, _ := cdt.NewCustomDate("2018-06-10")
 	want = Query{
-		XMLName: xml.Name{Local: "Query"},
 		Checkin: checkin,
 		Nights:  3,
 		PropertyList: &PropertyList{
-			XMLName: xml.Name{Local: "PropertyList"},
 			Property: []Property{
-				{xml.Name{Local: "Property"}, "pid5"},
-				{xml.Name{Local: "Property"}, "pid8"},
-				{xml.Name{Local: "Property"}, "pid13"},
-				{xml.Name{Local: "Property"}, "pid21"},
+				{"pid5"},
+				{"pid8"},
+				{"pid13"},
+				{"pid21"},
 			},
 		},
 	}
@@ -62,14 +60,12 @@ func TestMetadataQuery(t *testing.T) {
 	}
 
 	want = Query{
-		XMLName: xml.Name{Local: "Query"},
 		HotelInfoProperties: &HotelInfoProperties{
-			XMLName: xml.Name{Local: "HotelInfoProperties"},
 			Property: []Property{
-				{xml.Name{Local: "Property"}, "pid5"},
-				{xml.Name{Local: "Property"}, "pid8"},
-				{xml.Name{Local: "Property"}, "pid13"},
-				{xml.Name{Local: "Property"}, "pid21"},
+				{"pid5"},
+				{"pid8"},
+				{"pid13"},
+				{"pid21"},
 			},
 		},
 	}

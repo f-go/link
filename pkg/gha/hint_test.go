@@ -23,7 +23,6 @@ func TestHintRequestStruct(t *testing.T) {
 		timestamp, _ := cdt.NewCustomDateTime("2019-06-03T22:59:48Z")
 		lastFetchTime, _ := cdt.NewCustomDateTime("2019-06-03T22:54:40Z")
 		want := HintRequest{
-			XMLName:       xml.Name{Local: "HintRequest"},
 			ID:            "request",
 			Timestamp:     timestamp,
 			LastFetchTime: lastFetchTime,
@@ -35,9 +34,6 @@ func TestHintRequestStruct(t *testing.T) {
 			t.Errorf("Parsing request data failed. %v", err)
 		}
 
-		if !reflect.DeepEqual(got.XMLName, want.XMLName) {
-			t.Errorf("XMLName = %v, want %v", got.XMLName, want.XMLName)
-		}
 		if got.ID != want.ID {
 			t.Errorf("ID = %v, want %v", got.ID, want.ID)
 		}
@@ -71,7 +67,6 @@ func TestHintStruct(t *testing.T) {
 			"Test Hint Struct - No Items",
 			"./testdata/Hint-NoItems.xml",
 			Hint{
-				xml.Name{Local: "Hint"},
 				[]Item{},
 			},
 		},
@@ -81,22 +76,19 @@ func TestHintStruct(t *testing.T) {
 			"Test Hint Struct - Exact Itinerary Hint Response",
 			"./testdata/Hint-ExactItinerary.xml",
 			Hint{
-				xml.Name{Local: "Hint"},
 				[]Item{
 					{
-						XMLName:  xml.Name{Local: "Item"},
-						Property: []Property{{xml.Name{Local: "Property"}, "12345"}},
+						Property: []Property{
+							{"12345"},
+						},
 						Stay: &Stay{
-							XMLName:      xml.Name{Local: "Stay"},
 							CheckInDate:  newCustomDate("2018-07-03"),
 							LengthOfStay: 3,
 						},
 					},
 					{
-						XMLName:  xml.Name{Local: "Item"},
-						Property: []Property{{xml.Name{Local: "Property"}, "12345"}},
+						Property: []Property{{"12345"}},
 						Stay: &Stay{
-							XMLName:      xml.Name{Local: "Stay"},
 							CheckInDate:  newCustomDate("2018-07-03"),
 							LengthOfStay: 4,
 						},
@@ -110,13 +102,11 @@ func TestHintStruct(t *testing.T) {
 			"Test Hint Struct - Check-in Ranges Hint Response",
 			"./testdata/Hint-CheckInRanges.xml",
 			Hint{
-				xml.Name{Local: "Hint"},
 				[]Item{
 					{
-						XMLName: xml.Name{Local: "Item"},
 						Property: []Property{
-							{xml.Name{Local: "Property"}, "12345"},
-							{xml.Name{Local: "Property"}, "67890"},
+							{"12345"},
+							{"67890"},
 						},
 						FirstDate: newCustomDate("2018-07-03"),
 						LastDate:  newCustomDate("2018-07-06"),
@@ -130,26 +120,21 @@ func TestHintStruct(t *testing.T) {
 			"Test Hint Struct - Ranged Stay Hint Response",
 			"./testdata/Hint-RangedStay.xml",
 			Hint{
-				xml.Name{Local: "Hint"},
 				[]Item{
 					{
-						XMLName: xml.Name{Local: "Item"},
 						Property: []Property{
-							{xml.Name{Local: "Property"}, "12345"},
+							{"12345"},
 						},
 						StaysIncludingRange: &StaysIncludingRange{
-							XMLName:   xml.Name{Local: "StaysIncludingRange"},
 							FirstDate: newCustomDate("2018-07-03"),
 							LastDate:  newCustomDate("2018-07-06"),
 						},
 					},
 					{
-						XMLName: xml.Name{Local: "Item"},
 						Property: []Property{
-							{xml.Name{Local: "Property"}, "67890"},
+							{"67890"},
 						},
 						StaysIncludingRange: &StaysIncludingRange{
-							XMLName:   xml.Name{Local: "StaysIncludingRange"},
 							FirstDate: newCustomDate("2018-07-03"),
 						},
 					},
@@ -173,9 +158,6 @@ func TestHintStruct(t *testing.T) {
 				return
 			}
 
-			if !reflect.DeepEqual(got.XMLName, tt.want.XMLName) {
-				printError(t, got.XMLName, tt.want.XMLName)
-			}
 			if len(got.Item) != len(tt.want.Item) {
 				printError(t, len(got.Item), len(tt.want.Item))
 				return // stop here if no of items do not match, to avoid index issues in the following loop

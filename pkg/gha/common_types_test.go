@@ -13,9 +13,6 @@ func TestPropertyStruct(t *testing.T) {
 		t.Errorf("Unmarshal data failed. %v", err)
 	}
 
-	if p.XMLName.Local != "Property" {
-		t.Errorf("XMLName.Local got %v, want: Property", p.XMLName.Local)
-	}
 	if p.ID != "abc" {
 		t.Errorf("ID got %v, want: abc", p.ID)
 	}

@@ -1,7 +1,6 @@
 package gha
 
 import (
-	"encoding/xml"
 	"time"
 
 	cdt "github.com/f-go/go-custom-datetime"
@@ -19,7 +18,6 @@ import (
 //   it's escaped). All Transaction messages containing HTML will
 //   be rejected.
 type Transaction struct {
-	XMLName   xml.Name           `xml:""`
 	ID        string             `xml:"id,attr"`        // required
 	Timestamp cdt.CustomDateTime `xml:"timestamp,attr"` // required
 	Partner   string             `xml:"partner,attr,omitempty"`
@@ -49,7 +47,6 @@ type Transaction struct {
 type Result struct {
 	Rate
 
-	XMLName  xml.Name       `xml:""`
 	Property Property       `xml:""`
 	Checkin  cdt.CustomDate `xml:""`
 	RoomID   string         `xml:",omitempty"`
@@ -60,28 +57,24 @@ type Result struct {
 // Container for one or more <Rate> blocks. Each <Rate> in <Rates>
 // defines a different price for the room/itinerary combination.
 type Rates struct {
-	XMLName xml.Name `xml:""`
-	Rate    []Rate   `xml:",omitempty"`
+	Rate []Rate `xml:",omitempty"`
 }
 
 // Container that holds additional information such as the number
 // and type of guests (adults or children).
 type OccupancyDetails struct {
-	XMLName   xml.Name  `xml:""`
 	NumAdults uint8     `xml:""` // min:1, max:20
 	Children  *Children `xml:",omitempty"`
 }
 
 // Container that holds a list of the maximum age for each child.
 type Children struct {
-	XMLName xml.Name `xml:""`
-	Child   []Child  `xml:",omitempty"`
+	Child []Child `xml:",omitempty"`
 }
 
 // Specifies which guests are children (typically age 0-17).
 type Child struct {
-	XMLName xml.Name `xml:""`
-	Age     uint8    `xml:"age,attr"`
+	Age uint8 `xml:"age,attr"`
 }
 
 // Container fot one or more landing pages that are eligible for the hotel.
@@ -97,7 +90,6 @@ type Child struct {
 //
 // see also: https://developers.google.com/hotels/hotel-prices/dev-guide/pos-syntax
 type AllowablePointsOfSale struct {
-	XMLName     xml.Name      `xml:""`
 	PointOfSale []PointOfSale `xml:",omitempty"`
 }
 
@@ -105,8 +97,7 @@ type AllowablePointsOfSale struct {
 //
 // see also: https://developers.google.com/hotels/hotel-prices/dev-guide/pos-syntax
 type PointOfSale struct {
-	XMLName xml.Name `xml:""`
-	ID      string   `xml:"id,attr"`
+	ID string `xml:"id,attr"`
 }
 
 // Container that holds refund information.
@@ -146,10 +137,9 @@ type PointOfSale struct {
 // * If available is 0 or false, the other attributes are ignored. The rate does not
 //   display as refundable even if one or both of the other attributes is set.
 type Refundable struct {
-	XMLName             xml.Name `xml:""`
-	Available           bool     `xml:"available,attr"`
-	RefundableUntilDays int32    `xml:"refundable_until_days,attr"`
-	RefundableUntilTime string   `xml:"refundable_until_time,attr"`
+	Available           bool   `xml:"available,attr"`
+	RefundableUntilDays int32  `xml:"refundable_until_days,attr"`
+	RefundableUntilTime string `xml:"refundable_until_time,attr"`
 }
 
 // Container that holds all rate information.
@@ -158,7 +148,6 @@ type Refundable struct {
 // or <RoomBundle> element. If they are not set in <Rate>, they inherit their
 // value from the parent element.
 type Rate struct {
-	XMLName               xml.Name               `xml:""`
 	RateRuleID            string                 `xml:"rate_rule_id,attr,omitempty"`
 	Baserate              *Money                 `xml:",omitempty"`
 	Tax                   *Money                 `xml:",omitempty"`

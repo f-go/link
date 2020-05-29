@@ -28,13 +28,11 @@ func TestTransactionMultiPropertyExample(t *testing.T) {
 	timestamp, _ := cdt.NewCustomDateTime("2017-07-23T16:20:00-04:00")
 	checkin, _ := cdt.NewCustomDate("2018-06-10")
 	want = Transaction{
-		XMLName:   xml.Name{Local: "Transaction"},
 		ID:        "42",
-		Timestamp: cdt.CustomDateTime(timestamp),
+		Timestamp: timestamp,
 		Result: []Result{
 			{
-				XMLName:  xml.Name{Local: "Result"},
-				Property: Property{xml.Name{Local: "Property"}, "060773"},
+				Property: Property{"060773"},
 				RoomID:   "RoomType101",
 				Checkin:  checkin,
 				Nights:   2,
@@ -43,16 +41,14 @@ func TestTransactionMultiPropertyExample(t *testing.T) {
 					Tax:       &Money{25.12, "USD"},
 					OtherFees: &Money{2.00, "USD"},
 					AllowablePointsOfSale: &AllowablePointsOfSale{
-						XMLName: xml.Name{Local: "AllowablePointsOfSale"},
 						PointOfSale: []PointOfSale{
-							{xml.Name{Local: "PointOfSale"}, "site1"},
+							{"site1"},
 						},
 					},
 				},
 			},
 			{
-				XMLName:  xml.Name{Local: "Result"},
-				Property: Property{xml.Name{Local: "Property"}, "052213"},
+				Property: Property{"052213"},
 				RoomID:   "RoomType101",
 				Checkin:  checkin,
 				Nights:   2,
@@ -61,10 +57,9 @@ func TestTransactionMultiPropertyExample(t *testing.T) {
 					Tax:       &Money{26.42, "USD"},
 					OtherFees: &Money{2.00, "USD"},
 					AllowablePointsOfSale: &AllowablePointsOfSale{
-						XMLName: xml.Name{Local: "AllowablePointsOfSale"},
 						PointOfSale: []PointOfSale{
-							{xml.Name{Local: "PointOfSale"}, "otto"},
-							{xml.Name{Local: "PointOfSale"}, "simon"},
+							{"otto"},
+							{"simon"},
 						},
 					},
 				},
@@ -96,13 +91,11 @@ func TestTransactionMultiRateExample(t *testing.T) {
 	timestamp, _ := cdt.NewCustomDateTime("2020-07-23T16:20:00-04:00")
 	checkin, _ := cdt.NewCustomDate("2021-01-13")
 	want = Transaction{
-		XMLName:   xml.Name{Local: "Transaction"},
 		ID:        "42",
-		Timestamp: cdt.CustomDateTime(timestamp),
+		Timestamp: timestamp,
 		Result: []Result{
 			{
-				XMLName:  xml.Name{Local: "Result"},
-				Property: Property{xml.Name{Local: "Property"}, "1234"},
+				Property: Property{"1234"},
 				Checkin:  checkin,
 				Nights:   9,
 				Rate: Rate{
@@ -112,38 +105,32 @@ func TestTransactionMultiRateExample(t *testing.T) {
 					Occupancy: 2,
 				},
 				Rates: &Rates{
-					XMLName: xml.Name{Local: "Rates"},
 					Rate: []Rate{
 						{
-							XMLName:   xml.Name{Local: "Rate"},
 							Baserate:  &Money{3196.1, "USD"},
 							Tax:       &Money{559.49, "USD"},
 							OtherFees: &Money{543.34, "USD"},
 							Occupancy: 1,
 						},
 						{
-							XMLName:   xml.Name{Local: "Rate"},
 							Baserate:  &Money{3196.1, "USD"},
 							Tax:       &Money{559.49, "USD"},
 							OtherFees: &Money{543.34, "USD"},
 							Occupancy: 3,
 						},
 						{
-							XMLName:   xml.Name{Local: "Rate"},
 							Baserate:  &Money{3196.1, "USD"},
 							Tax:       &Money{559.49, "USD"},
 							OtherFees: &Money{543.34, "USD"},
 							Occupancy: 4,
 						},
 						{
-							XMLName:   xml.Name{Local: "Rate"},
 							Baserate:  &Money{3196.1, "USD"},
 							Tax:       &Money{559.49, "USD"},
 							OtherFees: &Money{543.34, "USD"},
 							Occupancy: 5,
 						},
 						{
-							XMLName:   xml.Name{Local: "Rate"},
 							Baserate:  &Money{3196.1, "USD"},
 							Tax:       &Money{559.49, "USD"},
 							OtherFees: &Money{543.34, "USD"},
@@ -179,13 +166,11 @@ func TestTransactionBaseRateAndConditionalRate(t *testing.T) {
 	timestamp, _ := cdt.NewCustomDateTime("2017-07-18T16:20:00-04:00")
 	checkin, _ := cdt.NewCustomDate("2018-06-10")
 	want = Transaction{
-		XMLName:   xml.Name{Local: "Transaction"},
 		ID:        "42",
-		Timestamp: cdt.CustomDateTime(timestamp),
+		Timestamp: timestamp,
 		Result: []Result{
 			{
-				XMLName:  xml.Name{Local: "Result"},
-				Property: Property{xml.Name{Local: "Property"}, "1234"},
+				Property: Property{"1234"},
 				Checkin:  checkin,
 				Nights:   1,
 				Rate: Rate{
@@ -194,10 +179,8 @@ func TestTransactionBaseRateAndConditionalRate(t *testing.T) {
 					OtherFees: &Money{1.00, "USD"},
 				},
 				Rates: &Rates{
-					XMLName: xml.Name{Local: "Rates"},
 					Rate: []Rate{
 						{
-							XMLName:    xml.Name{Local: "Rate"},
 							RateRuleID: "mobile",
 							Baserate:   &Money{180.00, "USD"},
 							Tax:        &Money{18.00, "USD"},
@@ -233,13 +216,11 @@ func TestTransactionOneItineraryPricingForOneAdultChild(t *testing.T) {
 	timestamp, _ := cdt.NewCustomDateTime("2018-04-18T11:27:45-04:00")
 	checkin, _ := cdt.NewCustomDate("2018-06-20")
 	want = Transaction{
-		XMLName:   xml.Name{Local: "Transaction"},
 		ID:        "Wtdj8QoQIWcAAbaTGlIAAAC4",
-		Timestamp: cdt.CustomDateTime(timestamp),
+		Timestamp: timestamp,
 		Result: []Result{
 			{
-				XMLName:  xml.Name{Local: "Result"},
-				Property: Property{xml.Name{Local: "Property"}, "8251"},
+				Property: Property{"8251"},
 				Checkin:  checkin,
 				Nights:   1,
 				Rate: Rate{
@@ -248,19 +229,15 @@ func TestTransactionOneItineraryPricingForOneAdultChild(t *testing.T) {
 					OtherFees: &Money{0.00, "USD"},
 				},
 				Rates: &Rates{
-					XMLName: xml.Name{Local: "Rates"},
 					Rate: []Rate{
 						{
-							XMLName:    xml.Name{Local: "Rate"},
 							RateRuleID: "rule-951",
 							Occupancy:  2,
 							OccupancyDetails: &OccupancyDetails{
-								XMLName:   xml.Name{Local: "OccupancyDetails"},
 								NumAdults: 1,
 								Children: &Children{
-									XMLName: xml.Name{Local: "Children"},
 									Child: []Child{
-										{xml.Name{Local: "Child"}, 17},
+										{17},
 									},
 								},
 							},
@@ -269,9 +246,8 @@ func TestTransactionOneItineraryPricingForOneAdultChild(t *testing.T) {
 							OtherFees: &Money{0.00, "USD"},
 							Custom1:   "abc4",
 							AllowablePointsOfSale: &AllowablePointsOfSale{
-								XMLName: xml.Name{Local: "AllowablePointsOfSale"},
 								PointOfSale: []PointOfSale{
-									{xml.Name{Local: "PointOfSale"}, "yourhotelpartnersite.com"},
+									{"yourhotelpartnersite.com"},
 								},
 							},
 						},
