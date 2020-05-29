@@ -1,6 +1,8 @@
 package gha
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+)
 
 // The ID of a hotel, using the same ID as the Hotel List Feed. The number of
 // <Property> elements you can specify in a single <Item> block is determined
@@ -23,6 +25,3 @@ type Money struct {
 	Value    float32 `xml:",chardata"`
 	Currency string  `xml:"currency,attr"`
 }
-
-
-

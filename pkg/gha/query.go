@@ -1,6 +1,10 @@
 package gha
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+
+	cdt "github.com/f-go/go-custom-datetime"
+)
 
 // Query messages are requests from Google for pricing or
 // metadata updates. They are used with both the Pull and
@@ -31,7 +35,7 @@ import "encoding/xml"
 // types are described in this section.
 type Query struct {
 	XMLName             xml.Name             `xml:""`
-	Checkin             string               `xml:",omitempty"`
+	Checkin             cdt.CustomDate      `xml:",omitempty"`
 	Nights              int                  `xml:",omitempty"`
 	PropertyList        *PropertyList        `xml:",omitempty"`
 	HotelInfoProperties *HotelInfoProperties `xml:",omitempty"`

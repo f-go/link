@@ -3,6 +3,8 @@ package gha
 import (
 	"encoding/xml"
 	"time"
+
+	cdt "github.com/f-go/go-custom-datetime"
 )
 
 // Container for descriptive information about rooms and packages
@@ -17,11 +19,11 @@ import (
 //   it's escaped). All Transaction messages containing HTML will
 //   be rejected.
 type Transaction struct {
-	XMLName   xml.Name  `xml:"Transaction"`
-	ID        string    `xml:"id,attr"`
-	Timestamp time.Time `xml:"timestamp,attr"`
-	Partner   string    `xml:"partner,attr,omitempty"`
-	Result    []Result  `xml:"Result,omitempty"`
+	XMLName   xml.Name           `xml:""`
+	ID        string             `xml:"id,attr"`        // required
+	Timestamp cdt.CustomDateTime `xml:"timestamp,attr"` // required
+	Partner   string             `xml:"partner,attr,omitempty"`
+	Result    []Result           `xml:",omitempty"`
 
 	// PropertyDataSet PropertyDataSet `xml:"PropertyDataSet,omitempty"` will be added later
 
@@ -47,12 +49,12 @@ type Transaction struct {
 type Result struct {
 	Rate
 
-	XMLName  xml.Name `xml:""`
-	Property Property `xml:""`
-	Checkin  string   `xml:""`
-	RoomID   string   `xml:",omitempty"`
-	Nights   uint8    `xml:",omitempty"`
-	Rates    *Rates   `xml:",omitempty"`
+	XMLName  xml.Name       `xml:""`
+	Property Property       `xml:""`
+	Checkin  cdt.CustomDate `xml:""`
+	RoomID   string         `xml:",omitempty"`
+	Nights   uint8          `xml:",omitempty"`
+	Rates    *Rates         `xml:",omitempty"`
 }
 
 // Container for one or more <Rate> blocks. Each <Rate> in <Rates>

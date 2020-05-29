@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"reflect"
 	"testing"
-	"time"
 
+	cdt "github.com/f-go/go-custom-datetime"
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
@@ -25,17 +25,18 @@ func TestTransactionMultiPropertyExample(t *testing.T) {
 		return
 	}
 
-	time, _ := time.Parse(time.RFC3339, "2017-07-23T16:20:00-04:00")
+	timestamp, _ := cdt.NewCustomDateTime("2017-07-23T16:20:00-04:00")
+	checkin, _ := cdt.NewCustomDate("2018-06-10")
 	want = Transaction{
 		XMLName:   xml.Name{Local: "Transaction"},
 		ID:        "42",
-		Timestamp: time,
+		Timestamp: cdt.CustomDateTime(timestamp),
 		Result: []Result{
 			{
 				XMLName:  xml.Name{Local: "Result"},
 				Property: Property{xml.Name{Local: "Property"}, "060773"},
 				RoomID:   "RoomType101",
-				Checkin:  "2018-06-10",
+				Checkin:  checkin,
 				Nights:   2,
 				Rate: Rate{
 					Baserate:  &Money{278.33, "USD"},
@@ -53,7 +54,7 @@ func TestTransactionMultiPropertyExample(t *testing.T) {
 				XMLName:  xml.Name{Local: "Result"},
 				Property: Property{xml.Name{Local: "Property"}, "052213"},
 				RoomID:   "RoomType101",
-				Checkin:  "2018-06-10",
+				Checkin:  checkin,
 				Nights:   2,
 				Rate: Rate{
 					Baserate:  &Money{299.98, "USD"},
@@ -92,16 +93,17 @@ func TestTransactionMultiRateExample(t *testing.T) {
 		return
 	}
 
-	time, _ := time.Parse(time.RFC3339, "2020-07-23T16:20:00-04:00")
+	timestamp, _ := cdt.NewCustomDateTime("2020-07-23T16:20:00-04:00")
+	checkin, _ := cdt.NewCustomDate("2021-01-13")
 	want = Transaction{
 		XMLName:   xml.Name{Local: "Transaction"},
 		ID:        "42",
-		Timestamp: time,
+		Timestamp: cdt.CustomDateTime(timestamp),
 		Result: []Result{
 			{
 				XMLName:  xml.Name{Local: "Result"},
 				Property: Property{xml.Name{Local: "Property"}, "1234"},
-				Checkin:  "2021-01-13",
+				Checkin:  checkin,
 				Nights:   9,
 				Rate: Rate{
 					Baserate:  &Money{3196.1, "USD"},
@@ -174,16 +176,17 @@ func TestTransactionBaseRateAndConditionalRate(t *testing.T) {
 		return
 	}
 
-	time, _ := time.Parse(time.RFC3339, "2017-07-18T16:20:00-04:00")
+	timestamp, _ := cdt.NewCustomDateTime("2017-07-18T16:20:00-04:00")
+	checkin, _ := cdt.NewCustomDate("2018-06-10")
 	want = Transaction{
 		XMLName:   xml.Name{Local: "Transaction"},
 		ID:        "42",
-		Timestamp: time,
+		Timestamp: cdt.CustomDateTime(timestamp),
 		Result: []Result{
 			{
 				XMLName:  xml.Name{Local: "Result"},
 				Property: Property{xml.Name{Local: "Property"}, "1234"},
-				Checkin:  "2018-06-10",
+				Checkin:  checkin,
 				Nights:   1,
 				Rate: Rate{
 					Baserate:  &Money{200.00, "USD"},
@@ -227,16 +230,17 @@ func TestTransactionOneItineraryPricingForOneAdultChild(t *testing.T) {
 		return
 	}
 
-	time, _ := time.Parse(time.RFC3339, "2018-04-18T11:27:45-04:00")
+	timestamp, _ := cdt.NewCustomDateTime("2018-04-18T11:27:45-04:00")
+	checkin, _ := cdt.NewCustomDate("2018-06-20")
 	want = Transaction{
 		XMLName:   xml.Name{Local: "Transaction"},
 		ID:        "Wtdj8QoQIWcAAbaTGlIAAAC4",
-		Timestamp: time,
+		Timestamp: cdt.CustomDateTime(timestamp),
 		Result: []Result{
 			{
 				XMLName:  xml.Name{Local: "Result"},
 				Property: Property{xml.Name{Local: "Property"}, "8251"},
-				Checkin:  "2018-06-20",
+				Checkin:  checkin,
 				Nights:   1,
 				Rate: Rate{
 					Baserate:  &Money{62.18, "USD"},
@@ -276,11 +280,6 @@ func TestTransactionOneItineraryPricingForOneAdultChild(t *testing.T) {
 			},
 		},
 	}
-
-	xg, _ := xml.Marshal(got)
-	fmt.Println(string(xg))
-	xw, _ := xml.Marshal(want)
-	fmt.Println(string(xw))
 
 	if !reflect.DeepEqual(got, want) {
 		dmp := diffmatchpatch.New()

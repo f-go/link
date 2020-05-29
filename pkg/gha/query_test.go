@@ -7,6 +7,7 @@ import (
 	"reflect"
 	"testing"
 
+	cdt "github.com/f-go/go-custom-datetime"
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
@@ -24,9 +25,10 @@ func TestPricingQuery(t *testing.T) {
 		return
 	}
 
+	checkin, _ := cdt.NewCustomDate("2018-06-10")
 	want = Query{
 		XMLName: xml.Name{Local: "Query"},
-		Checkin: "2018-06-10",
+		Checkin: checkin,
 		Nights:  3,
 		PropertyList: &PropertyList{
 			XMLName: xml.Name{Local: "PropertyList"},

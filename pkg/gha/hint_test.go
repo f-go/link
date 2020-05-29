@@ -7,6 +7,8 @@ import (
 	"reflect"
 	"testing"
 	"time"
+
+	cdt "github.com/f-go/go-custom-datetime"
 	"github.com/sergi/go-diff/diffmatchpatch"
 )
 
@@ -18,10 +20,10 @@ func TestHintRequestStruct(t *testing.T) {
 	}
 
 	t.Run("Test HintRequest Struct", func(t *testing.T) {
-		timestamp, _ := time.Parse(time.RFC3339, "2019-06-03T22:59:48Z")
-		lastFetchTime, _ := time.Parse(time.RFC3339, "2019-06-03T22:54:40Z")
+		timestamp, _ := cdt.NewCustomDateTime("2019-06-03T22:59:48Z")
+		lastFetchTime, _ := cdt.NewCustomDateTime("2019-06-03T22:54:40Z")
 		want := HintRequest{
-			XMLName:       xml.Name{"", "HintRequest"},
+			XMLName:       xml.Name{Local: "HintRequest"},
 			ID:            "request",
 			Timestamp:     timestamp,
 			LastFetchTime: lastFetchTime,
@@ -48,10 +50,15 @@ func TestHintRequestStruct(t *testing.T) {
 	})
 }
 
-func printError(t *testing.T, name string, got, want interface{}) {
+func printError(t *testing.T, got, want interface{}) {
 	dmp := diffmatchpatch.New()
 	diffs := dmp.DiffMain(fmt.Sprintf("%v", got), fmt.Sprintf("%v", want), false)
-	t.Errorf("%s - Item\ngot:  %v\nwant: %v\ndiff: %v", name, got, want, dmp.DiffPrettyText(diffs))
+	t.Errorf("\ngot:  %v\nwant: %v\ndiff: %v", got, want, dmp.DiffPrettyText(diffs))
+}
+
+func newCustomDate(value string) cdt.CustomDate {
+	d, _ := cdt.NewCustomDate(value)
+	return d
 }
 
 func TestHintStruct(t *testing.T) {
@@ -64,7 +71,7 @@ func TestHintStruct(t *testing.T) {
 			"Test Hint Struct - No Items",
 			"./testdata/Hint-NoItems.xml",
 			Hint{
-				xml.Name{"", "Hint"},
+				xml.Name{Local: "Hint"},
 				[]Item{},
 			},
 		},
@@ -74,23 +81,23 @@ func TestHintStruct(t *testing.T) {
 			"Test Hint Struct - Exact Itinerary Hint Response",
 			"./testdata/Hint-ExactItinerary.xml",
 			Hint{
-				xml.Name{"", "Hint"},
+				xml.Name{Local: "Hint"},
 				[]Item{
 					{
-						XMLName:  xml.Name{"", "Item"},
-						Property: []Property{{xml.Name{"", "Property"}, "12345"}},
+						XMLName:  xml.Name{Local: "Item"},
+						Property: []Property{{xml.Name{Local: "Property"}, "12345"}},
 						Stay: &Stay{
-							XMLName:      xml.Name{"", "Stay"},
-							CheckInDate:  "2018-07-03",
+							XMLName:      xml.Name{Local: "Stay"},
+							CheckInDate:  newCustomDate("2018-07-03"),
 							LengthOfStay: 3,
 						},
 					},
 					{
-						XMLName:  xml.Name{"", "Item"},
-						Property: []Property{{xml.Name{"", "Property"}, "12345"}},
+						XMLName:  xml.Name{Local: "Item"},
+						Property: []Property{{xml.Name{Local: "Property"}, "12345"}},
 						Stay: &Stay{
-							XMLName:      xml.Name{"", "Stay"},
-							CheckInDate:  "2018-07-03",
+							XMLName:      xml.Name{Local: "Stay"},
+							CheckInDate:  newCustomDate("2018-07-03"),
 							LengthOfStay: 4,
 						},
 					},
@@ -103,16 +110,16 @@ func TestHintStruct(t *testing.T) {
 			"Test Hint Struct - Check-in Ranges Hint Response",
 			"./testdata/Hint-CheckInRanges.xml",
 			Hint{
-				xml.Name{"", "Hint"},
+				xml.Name{Local: "Hint"},
 				[]Item{
 					{
-						XMLName: xml.Name{"", "Item"},
+						XMLName: xml.Name{Local: "Item"},
 						Property: []Property{
-							{xml.Name{"", "Property"}, "12345"},
-							{xml.Name{"", "Property"}, "67890"},
+							{xml.Name{Local: "Property"}, "12345"},
+							{xml.Name{Local: "Property"}, "67890"},
 						},
-						FirstDate: "2018-07-03",
-						LastDate:  "2018-07-06",
+						FirstDate: newCustomDate("2018-07-03"),
+						LastDate:  newCustomDate("2018-07-06"),
 					},
 				},
 			},
@@ -123,27 +130,27 @@ func TestHintStruct(t *testing.T) {
 			"Test Hint Struct - Ranged Stay Hint Response",
 			"./testdata/Hint-RangedStay.xml",
 			Hint{
-				xml.Name{"", "Hint"},
+				xml.Name{Local: "Hint"},
 				[]Item{
 					{
-						XMLName: xml.Name{"", "Item"},
+						XMLName: xml.Name{Local: "Item"},
 						Property: []Property{
-							{xml.Name{"", "Property"}, "12345"},
+							{xml.Name{Local: "Property"}, "12345"},
 						},
 						StaysIncludingRange: &StaysIncludingRange{
-							XMLName:   xml.Name{"", "StaysIncludingRange"},
-							FirstDate: "2018-07-03",
-							LastDate:  "2018-07-06",
+							XMLName:   xml.Name{Local: "StaysIncludingRange"},
+							FirstDate: newCustomDate("2018-07-03"),
+							LastDate:  newCustomDate("2018-07-06"),
 						},
 					},
 					{
-						XMLName: xml.Name{"", "Item"},
+						XMLName: xml.Name{Local: "Item"},
 						Property: []Property{
-							{xml.Name{"", "Property"}, "67890"},
+							{xml.Name{Local: "Property"}, "67890"},
 						},
 						StaysIncludingRange: &StaysIncludingRange{
-							XMLName:   xml.Name{"", "StaysIncludingRange"},
-							FirstDate: "2018-07-03",
+							XMLName:   xml.Name{Local: "StaysIncludingRange"},
+							FirstDate: newCustomDate("2018-07-03"),
 						},
 					},
 				},
@@ -167,29 +174,35 @@ func TestHintStruct(t *testing.T) {
 			}
 
 			if !reflect.DeepEqual(got.XMLName, tt.want.XMLName) {
-				printError(t, tt.name, got.XMLName, tt.want.XMLName)
+				printError(t, got.XMLName, tt.want.XMLName)
 			}
 			if len(got.Item) != len(tt.want.Item) {
-				printError(t, tt.name, len(got.Item), len(tt.want.Item))
+				printError(t, len(got.Item), len(tt.want.Item))
 				return // stop here if no of items do not match, to avoid index issues in the following loop
 			}
 
 			// check items
 			for idx, item := range tt.want.Item {
 				if !reflect.DeepEqual(item.Property, got.Item[idx].Property) {
-					printError(t, tt.name, item.Property, got.Item[idx].Property)
+					printError(t, item.Property, got.Item[idx].Property)
 				}
 				if item.Stay != nil && !reflect.DeepEqual(item.Stay, got.Item[idx].Stay) {
-					printError(t, tt.name, item.Stay, got.Item[idx].Stay)
+					printError(t, item.Stay, got.Item[idx].Stay)
 				}
 				if item.StaysIncludingRange != nil && !reflect.DeepEqual(item.StaysIncludingRange, got.Item[idx].StaysIncludingRange) {
-					printError(t, tt.name, item.StaysIncludingRange, got.Item[idx].StaysIncludingRange)
+					printError(t, item.StaysIncludingRange, got.Item[idx].StaysIncludingRange)
 				}
-				if item.FirstDate != got.Item[idx].FirstDate {
-					printError(t, tt.name, item.FirstDate, got.Item[idx].FirstDate)
+				if !reflect.DeepEqual(item.FirstDate, got.Item[idx].FirstDate) {
+					printError(
+						t,
+						time.Time(item.FirstDate).Format(cdt.CustomDateFormat),
+						time.Time(got.Item[idx].FirstDate).Format(cdt.CustomDateFormat))
 				}
-				if item.LastDate != got.Item[idx].LastDate {
-					printError(t, tt.name, item.LastDate, got.Item[idx].LastDate)
+				if !reflect.DeepEqual(item.LastDate, got.Item[idx].LastDate) {
+					printError(
+						t,
+						time.Time(item.LastDate).Format(cdt.CustomDateFormat),
+						time.Time(got.Item[idx].LastDate).Format(cdt.CustomDateFormat))
 				}
 			}
 		})
